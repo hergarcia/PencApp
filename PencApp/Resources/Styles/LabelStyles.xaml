@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style TargetType="Label" x:Key="NSLight">
+        <Setter Property="FontFamily" Value="NSLight" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="NSRegular">
+        <Setter Property="FontFamily" Value="NSRegular" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="NSMedium">
+        <Setter Property="FontFamily" Value="NSMedium" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="NSBold">
+        <Setter Property="FontFamily" Value="NSBold" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="NSExtraBold">
+        <Setter Property="FontFamily" Value="NSExtraBold" />
+    </Style>
+
+    <Style BasedOn="{StaticResource NSMedium}" TargetType="Label">
+        <Setter Property="TextColor" Value="{toolkit:AppThemeResource TextDefault}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+
+    <Style
+        BasedOn="{StaticResource NSBold}"
+        TargetType="Label"
+        x:Key="InputPlaceholderStyle">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+
+
+</ResourceDictionary>

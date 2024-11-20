@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Border
+    MinimumHeightRequest="48"
+    Padding="0"
+    Stroke="{Binding UnfocusedBorderColor}"
+    StrokeShape="{RoundRectangle CornerRadius={x:Static styles:UiConstants.DefaultCornerRadius}}"
+    StrokeThickness="1"
+    x:Class="PencApp.Controls.InputBorder"
+    x:DataType="local:InputBorder"
+    x:Name="Border"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:local="clr-namespace:PencApp.Controls"
+    xmlns:styles="clr-namespace:PencApp.Resources.Styles"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Border.Triggers>
+        <MultiTrigger TargetType="Border">
+            <MultiTrigger.Conditions>
+                <BindingCondition Binding="{Binding Source={x:Reference Border}, Path=IsInputFocused}" Value="False" />
+                <BindingCondition Binding="{Binding Source={x:Reference Border}, Path=InputState}" Value="{x:Static local:EInputState.Default}" />
+            </MultiTrigger.Conditions>
+            <Setter Property="Stroke" Value="{Binding Source={x:Reference Border}, Path=UnfocusedBorderColor}" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </MultiTrigger>
+
+        <MultiTrigger TargetType="Border">
+            <MultiTrigger.Conditions>
+                <BindingCondition Binding="{Binding Source={x:Reference Border}, Path=IsInputFocused}" Value="True" />
+                <BindingCondition Binding="{Binding Source={x:Reference Border}, Path=InputState}" Value="{x:Static local:EInputState.Default}" />
+            </MultiTrigger.Conditions>
+            <Setter Property="Stroke" Value="{Binding Source={x:Reference Border}, Path=FocusedBorderColor}" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </MultiTrigger>
+
+        <DataTrigger
+            Binding="{Binding Source={x:Reference Border}, Path=InputState}"
+            TargetType="Border"
+            Value="{x:Static local:EInputState.Error}">
+            <Setter Property="Stroke" Value="{toolkit:AppThemeResource RedSalmon}" />
+            <Setter Property="BackgroundColor" Value="{toolkit:AppThemeResource RedLight}" />
+        </DataTrigger>
+
+        <DataTrigger
+            Binding="{Binding Source={x:Reference Border}, Path=InputState}"
+            TargetType="Border"
+            Value="{x:Static local:EInputState.Completed}">
+            <Setter Property="Stroke" Value="{toolkit:AppThemeResource GreenSuccess}" />
+            <Setter Property="BackgroundColor" Value="{toolkit:AppThemeResource GreenSuccessLight}" />
+        </DataTrigger>
+        
+        <DataTrigger
+            Binding="{Binding Source={x:Reference Border}, Path=InputState}"
+            TargetType="Border"
+            Value="{x:Static local:EInputState.Disabled}">
+            <Setter Property="Stroke" Value="{toolkit:AppThemeResource LightGray}" />
+            <Setter Property="BackgroundColor" Value="{toolkit:AppThemeResource LightGray}" />
+        </DataTrigger>
+    </Border.Triggers>
+</Border>

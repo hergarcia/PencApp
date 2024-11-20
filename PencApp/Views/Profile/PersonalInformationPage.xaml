@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shared:CustomContentPage
+    x:Class="PencApp.Views.Profile.PersonalInformationPage"
+    x:DataType="vm:PersonalInformationViewModel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:controls="clr-namespace:PencApp.Controls"
+    xmlns:shared="clr-namespace:PencApp.Views.Shared"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PencApp.ViewModels.Profile"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <controls:CustomNavigationBar
+                BackgroundColor="{toolkit:AppThemeResource BlueHeader}"
+                LeftButtonCommand="{Binding GoBackCommand}"
+                LeftButtonIconColor="White"
+                TextColor="White"
+                Title="Personal information" />
+            <VerticalStackLayout
+                Margin="15"
+                BackgroundColor="{toolkit:AppThemeResource AppBackgroundColor}"
+                Spacing="10">
+                <controls:CustomEntry
+                    EntryState="Disabled"
+                    IsPlaceholderAnimationDisabled="True"
+                    Placeholder="Username"
+                    Text="{Binding CurrentUser.Username}" />
+                <controls:CustomEntry
+                    IsPlaceholderAnimationDisabled="True"
+                    Placeholder="First Name"
+                    Text="{Binding CurrentUser.FirstName}" />
+                <controls:CustomEntry
+                    IsPlaceholderAnimationDisabled="True"
+                    Placeholder="Last Name"
+                    Text="{Binding CurrentUser.LastName}" />
+                <controls:CustomDatePicker
+                    Placeholder="Date of Birth"
+                    Date="{Binding CurrentUser.BirthDay, StringFormat='{0:dd MMMM yyyy}'}" />
+                <controls:CustomEntry
+                    IsPlaceholderAnimationDisabled="True"
+                    Placeholder="Email Address"
+                    Text="{Binding CurrentUser.EmailAddress}" />
+                <controls:CustomEntry
+                    IsPlaceholderAnimationDisabled="True"
+                    Placeholder="Phone Number"
+                    Text="{Binding CurrentUser.PhoneNumber}" />
+            </VerticalStackLayout>
+
+            <Button
+                Margin="15"
+                Command="{Binding SaveUserCommand}" 
+                Text="Guardar" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</shared:CustomContentPage>

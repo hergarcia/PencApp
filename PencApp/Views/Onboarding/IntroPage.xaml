@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="PencApp.Views.Onboarding.IntroPage"
+    x:DataType="vm:IntroViewModel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:vm="clr-namespace:PencApp.ViewModels.Onboarding"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ContentPage.Resources>
+        <Style TargetType="RoundRectangle" x:Key="IndicatorLabelStyle">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                <Setter Property="WidthRequest" Value="6" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Black" />
+                                <Setter Property="WidthRequest" Value="18" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto">
+        <CarouselView
+            Grid.RowSpan="2"
+            HorizontalOptions="Fill"
+            IndicatorView="indicatorView"
+            ItemsSource="{Binding IntroCarouselSource}"
+            Margin="0,0,0,150"
+            Position="{Binding CarouselPosition}"
+            VerticalOptions="Fill"
+            x:Name="CarouselView">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <ffimageloading:CachedImage Aspect="AspectFill" Source="{Binding .}" />
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <IndicatorView
+            IndicatorColor="Transparent"
+            Margin="20"
+            SelectedIndicatorColor="Transparent"
+            x:Name="indicatorView">
+            <IndicatorView.IndicatorTemplate>
+                <DataTemplate>
+                    <RoundRectangle
+                        CornerRadius="3"
+                        HeightRequest="6"
+                        Style="{StaticResource IndicatorLabelStyle}" />
+                </DataTemplate>
+            </IndicatorView.IndicatorTemplate>
+        </IndicatorView>
+
+        <Button
+            BackgroundColor="Transparent"
+            Command="{Binding GoBackCommand}"
+            HorizontalOptions="End"
+            Margin="10"
+            MinimumHeightRequest="0"
+            MinimumWidthRequest="0"
+            Padding="5"
+            Text="Skip"
+            VerticalOptions="Start" />
+
+        <Border
+            BackgroundColor="White"
+            Grid.Row="1"
+            Padding="20,40,20,20"
+            StrokeShape="RoundRectangle 15,15,0,0"
+            StrokeThickness="0">
+            <VerticalStackLayout Spacing="20">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="36"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding Title}"
+                    TextColor="#2a4b43" />
+                <Label HorizontalTextAlignment="Center" Text="{Binding Message}" />
+                <Button
+                    Clicked="Button_OnClicked"
+                    Command="{Binding NextCommand}"
+                    Text="{Binding ButtonText}" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

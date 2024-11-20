@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentView
+    x:Class="PencApp.Controls.CustomEntry"
+    x:DataType="local:CustomEntry"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:local="clr-namespace:PencApp.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid RowDefinitions="*,Auto">
+        <Grid.Triggers>
+            <DataTrigger
+                Binding="{Binding HelpText, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
+                TargetType="Grid"
+                Value="True">
+                <Setter Property="RowSpacing" Value="5" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding EntryState}"
+                TargetType="Grid"
+                Value="{x:Static local:EInputState.Disabled}">
+                <Setter Property="Opacity" Value=".5" />
+            </DataTrigger>
+        </Grid.Triggers>
+
+        <local:InputBorder
+            FocusedBorderColor="{Binding FocusedBorderColor}"
+            InputState="{Binding EntryState}"
+            IsInputFocused="{Binding Source={x:Reference Entry}, Path=IsFocused}"
+            UnfocusedBorderColor="{Binding UnfocusedBorderColor}">
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding Placeholder, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
+                    Margin="20,10"
+                    Style="{StaticResource InputPlaceholderStyle}"
+                    Text="{Binding Placeholder}"
+                    TextColor="{Binding PlaceholderColor}"
+                    VerticalOptions="Center"
+                    x:Name="PlaceholderLabel" />
+                <Entry
+                    Focused="Entry_OnFocused"
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    Keyboard="{Binding Keyboard}"
+                    Margin="17,15,0,0"
+                    PropertyChanged="Entry_OnPropertyChanged"
+                    Style="{Binding EntryStyle}"
+                    Text="{Binding Text}"
+                    TextColor="{Binding TextColor}"
+                    Unfocused="Entry_OnUnfocused"
+                    VerticalOptions="End"
+                    x:Name="Entry">
+                    <Entry.Triggers>
+                        <DataTrigger
+                            Binding="{Binding EntryState}"
+                            TargetType="Entry"
+                            Value="{x:Static local:EInputState.Disabled}">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <HorizontalStackLayout
+                    Grid.Column="1"
+                    Margin="10,0,20,0"
+                    Spacing="5">
+                    <Button
+                        BackgroundColor="Transparent"
+                        Clicked="ShowPasswordButton_OnClicked"
+                        FontAttributes="Bold"
+                        FontFamily="NSLight"
+                        IsVisible="False"
+                        Margin="0,10"
+                        MinimumHeightRequest="0"
+                        Padding="0"
+                        x:Name="ShowPasswordButton" />
+                    <Button
+                        BackgroundColor="{Binding CleanButtonBackgroundColor}"
+                        BorderWidth="0"
+                        Clicked="CleanButton_OnClicked"
+                        CornerRadius="6"
+                        HeightRequest="20"
+                        ImageSource="window_close.png"
+                        Padding="4"
+                        WidthRequest="20"
+                        x:Name="CleanButton">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="White" />
+                        </ImageButton.Behaviors>
+                    </Button>
+                </HorizontalStackLayout>
+
+            </Grid>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+            </Border.GestureRecognizers>
+        </local:InputBorder>
+
+        <Label
+            FontAttributes="Bold"
+            FontSize="10"
+            Grid.Row="1"
+            IsVisible="{Binding HelpText, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
+            Margin="1,0,0,0"
+            Text="{Binding HelpText}">
+            <Label.Triggers>
+                <DataTrigger
+                    Binding="{Binding EntryState}"
+                    TargetType="Label"
+                    Value="{x:Static local:EInputState.Error}">
+                    <Setter Property="TextColor" Value="{toolkit:AppThemeResource RedSalmon}" />
+                </DataTrigger>
+
+                <DataTrigger
+                    Binding="{Binding EntryState}"
+                    TargetType="Label"
+                    Value="{x:Static local:EInputState.Completed}">
+                    <Setter Property="TextColor" Value="{toolkit:AppThemeResource GreenSuccess}" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+    </Grid>
+
+</ContentView>

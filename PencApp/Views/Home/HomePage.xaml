@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<tabbedPage:BaseTabPage
+    IconImageSource="home.png"
+    Title="Home"
+    x:Class="PencApp.Views.Home.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:tabbedPage="clr-namespace:PencApp.Views.TabbedPage"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content />
+</tabbedPage:BaseTabPage>

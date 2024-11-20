@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="PencApp.Views.Onboarding.RegisterPage"
+    x:DataType="vm:RegisterViewModel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:controls="clr-namespace:PencApp.Controls"
+    xmlns:lang="clr-namespace:PencApp.Resources.Languages"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PencApp.ViewModels.Onboarding"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content>
+        <Grid BackgroundColor="{toolkit:AppThemeResource BlueHeader}" RowDefinitions="Auto,*">
+            <VerticalStackLayout Margin="0,10,0,20" Spacing="5">
+                <ImageButton
+                    Command="{Binding GoBackCommand}"
+                    HorizontalOptions="Start"
+                    Margin="10,0"
+                    Source="arrow_left.png"
+                    Style="{StaticResource NavigationBarImageButtonStyle}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="42"
+                    Margin="20,0"
+                    Text="{x:Static lang:AppResources.Register}"
+                    TextColor="White" />
+                <Label
+                    FontFamily="NSLight"
+                    Margin="20,0"
+                    Text="{x:Static lang:AppResources.Register_page_message}"
+                    TextColor="{toolkit:AppThemeResource LightGray}" />
+            </VerticalStackLayout>
+            <Grid
+                BackgroundColor="White"
+                Grid.Row="1"
+                Padding="20,40,20,20"
+                RowDefinitions="Auto,*">
+                <ScrollView>
+                    <VerticalStackLayout Spacing="20">
+                        <VerticalStackLayout Spacing="5">
+                            <controls:CustomEntry
+                                Placeholder="{x:Static lang:AppResources.Username}"
+                                ReturnType="Next"
+                                Text="{Binding Username}" />
+                            <controls:CustomEntry
+                                Placeholder="{x:Static lang:AppResources.Email_address}"
+                                ReturnType="Next"
+                                Text="{Binding EmailAddress}" />
+                            <controls:CustomEntry
+                                Placeholder="{x:Static lang:AppResources.Password}"
+                                ReturnType="Next"
+                                Text="{Binding Password}" />
+                            <!-- <controls:CustomEntry Placeholder="{x:Static lang:AppResources.Repeate_password}" ReturnType="Send" /> -->
+                        </VerticalStackLayout>
+                        <Button Command="{Binding RegisterCommand}" Text="{x:Static lang:AppResources.Register}" />
+                    </VerticalStackLayout>
+                </ScrollView>
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    HorizontalOptions="Center"
+                    Spacing="5"
+                    VerticalOptions="End">
+                    <Label Text="{x:Static lang:AppResources.I_have_an_account}" VerticalOptions="Center" />
+                    <Button
+                        Command="{Binding GoBackCommand}"
+                        HorizontalOptions="End"
+                        Style="{StaticResource TextButtonStyle}"
+                        Text="{x:Static lang:AppResources.Log_in}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

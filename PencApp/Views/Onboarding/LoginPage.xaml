@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="PencApp.Views.Onboarding.LoginPage"
+    x:DataType="vm:LoginViewModel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:controls="clr-namespace:PencApp.Controls"
+    xmlns:lang="clr-namespace:PencApp.Resources.Languages"
+    xmlns:styles="clr-namespace:PencApp.Resources.Styles"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PencApp.ViewModels.Onboarding"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ContentPage.Resources>
+        <Style TargetType="controls:CustomEntry">
+            <Setter Property="HasCleanButton" Value="True" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid BackgroundColor="{toolkit:AppThemeResource BlueHeader}" RowDefinitions="Auto,*">
+            <Label
+                FontAttributes="Bold"
+                FontSize="42"
+                Margin="20"
+                Text="{x:Static lang:AppResources.Sign_in_header}"
+                TextColor="White" />
+            <Grid
+                BackgroundColor="White"
+                Grid.Row="1"
+                Padding="20,40,20,20"
+                RowDefinitions="*,Auto,Auto"
+                RowSpacing="50">
+                <ScrollView
+                    Orientation="Vertical"
+                    VerticalOptions="Fill"
+                    VerticalScrollBarVisibility="Never">
+                    <VerticalStackLayout Spacing="5">
+                        <VerticalStackLayout Spacing="5">
+                            <controls:CustomEntry
+                                EntryState="{Binding EmailEntryState}"
+                                HelpText="{Binding EmailEntryHelpText}"
+                                Placeholder="{x:Static lang:AppResources.Username}"
+                                ReturnType="Next"
+                                Text="{Binding UserName}" />
+                            <controls:CustomEntry
+                                EntryState="{Binding PasswordEntryState}"
+                                HelpText="{Binding PasswordEntryHelpText}"
+                                IsPassword="True"
+                                Placeholder="{x:Static lang:AppResources.Password}"
+                                ReturnType="Send"
+                                Text="{Binding Password}" />
+                        </VerticalStackLayout>
+                        <Button
+                            HorizontalOptions="End"
+                            Style="{StaticResource TextButtonStyle}"
+                            Text="{x:Static lang:AppResources.Forgot_password}" />
+                        <Button Command="{Binding ContinueCommand}" Text="{x:Static lang:AppResources.Login}" />
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <VerticalStackLayout Grid.Row="1" Spacing="30">
+                    <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="20">
+                        <BoxView
+                            Color="{toolkit:AppThemeResource LightGray}"
+                            HeightRequest="1.5"
+                            HorizontalOptions="Fill" />
+                        <Label
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            Text="{x:Static lang:AppResources.Or_continue_with}" />
+                        <BoxView
+                            Color="{toolkit:AppThemeResource LightGray}"
+                            Grid.Column="2"
+                            HeightRequest="1.5"
+                            HorizontalOptions="Fill" />
+                    </Grid>
+                    <Button
+                        BackgroundColor="Transparent"
+                        BorderColor="#ebebeb"
+                        BorderWidth="1"
+                        Command="{Binding GoogleCommand}"
+                        CornerRadius="{x:Static styles:UiConstants.DefaultCornerRadiusValue}"
+                        ImageSource="google_logo.png"
+                        IsEnabled="True"
+                        Text="{x:Static lang:AppResources.Continue_with_Google}" />
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    Spacing="5">
+                    <Label Text="{x:Static lang:AppResources.Don_t_have_an_account_}" VerticalOptions="Center" />
+                    <Button
+                        Command="{Binding GoToRegisterCommand}"
+                        HorizontalOptions="End"
+                        Style="{StaticResource TextButtonStyle}"
+                        Text="{x:Static lang:AppResources.Register}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

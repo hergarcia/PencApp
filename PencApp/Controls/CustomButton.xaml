@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentView
+    x:Class="PencApp.Controls.CustomButton"
+    x:DataType="controls:CustomButton"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:controls="clr-namespace:PencApp.Controls"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ContentView.Resources>
+        <Style TargetType="ffimageloading:SvgCachedImage">
+            <Setter Property="Aspect" Value="Center" />
+            <Setter Property="HeightRequest" Value="24" />
+            <Setter Property="WidthRequest" Value="24" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+    </ContentView.Resources>
+
+    <Grid>
+        <Button
+            BackgroundColor="{Binding BackgroundColor}"
+            Command="{Binding Command}"
+            Grid.ColumnSpan="3" />
+
+        <Grid
+            InputTransparent="True"
+            ColumnDefinitions="24,*,24"
+            ColumnSpacing="10"
+            Padding="10,0">
+            <ffimageloading:SvgCachedImage Source="{Binding LeftImageSource}">
+                <ffimageloading:SvgCachedImage.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{Binding LeftImageColor}" />
+                </ffimageloading:SvgCachedImage.Behaviors>
+            </ffimageloading:SvgCachedImage>
+
+            <Label
+                Grid.Column="1"
+                Text="{Binding Text}"
+                TextColor="{Binding TextColor}"
+                VerticalOptions="Center" />
+
+            <ffimageloading:SvgCachedImage Grid.Column="2" Source="{Binding RightImageSource}">
+                <ffimageloading:SvgCachedImage.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{Binding RightImageColor}" />
+                </ffimageloading:SvgCachedImage.Behaviors>
+            </ffimageloading:SvgCachedImage>
+        </Grid>
+    </Grid>
+</ContentView>
