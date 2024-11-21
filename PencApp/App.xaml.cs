@@ -6,9 +6,4 @@ public partial class App : Application
     {
         InitializeComponent();
     }
-
-    protected override void OnResume()
-    {
-        base.OnResume();
-    }
 }

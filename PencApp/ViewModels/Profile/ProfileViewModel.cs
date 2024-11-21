@@ -12,8 +12,8 @@ namespace PencApp.ViewModels.Profile;
 [ObservableRecipient]
 public partial class ProfileViewModel : BaseViewModel, IRecipient<User>
 {
-    [ObservableProperty]
-    private User? _currentUser;
+    [ObservableProperty] private User? _currentUser;
+    [ObservableProperty] private string? _nameInitials;
 
     private readonly IUserService _userService;
 
@@ -27,27 +27,28 @@ public partial class ProfileViewModel : BaseViewModel, IRecipient<User>
     public void Receive(User message)
     {
         CurrentUser = message;
+        SetNameInitials();
     }
-    
+
+    private void SetNameInitials()
+    {
+        if (CurrentUser is { FirstName: not null, LastName: not null })
+        {
+            NameInitials = new string(new[] { CurrentUser.FirstName.First(), CurrentUser.LastName.First() }).ToUpper();
+        }
+    }
+
     public override async Task InitializeAsync(INavigationParameters parameters)
     {
         try
         {
             CurrentUser = Task.Run(async () => await _userService.GetCurrentUser()).Result;
+            SetNameInitials();
         }
         catch (Exception e)
         {
             _userService.Logout();
-            try
-            {
-
             await NavigationService.NavigateAsync(nameof(NavigationPage) + "/" + nameof(LoginPage));
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                throw;
-            }
         }
         await base.InitializeAsync(parameters);
     }

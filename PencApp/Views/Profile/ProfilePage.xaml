@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <tabbedPage:BaseTabPage
     IconImageSource="account.png"
-    Title="Profile"
+    Title="{x:Static lang:AppResources.Profile}"
     x:Class="PencApp.Views.Profile.ProfilePage"
     x:DataType="vm:ProfileViewModel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -22,6 +22,7 @@
     <ContentPage.Resources>
         <Style TargetType="controls:CustomButton" x:Key="SettingsButtonStyle">
             <Setter Property="RightImageSource" Value="chevron_right_light.png" />
+            <Setter Property="RightImageColor" Value="{toolkit:AppThemeResource BlueHeader}" />
             <Setter Property="TextColor" Value="{toolkit:AppThemeResource BlueHeader}" />
             <Setter Property="BackgroundColor" Value="Transparent" />
         </Style>
@@ -39,17 +40,23 @@
                     Text="{x:Static lang:AppResources.Profile}"
                     TextColor="White" />
                 <HorizontalStackLayout Spacing="10">
-                    <ffimageloading:SvgCachedImage
+                    <Border
+                        StrokeThickness="0"
+                        BackgroundColor="White"
+                        StrokeShape="Ellipse"
                         HeightRequest="70"
                         HorizontalOptions="Center"
                         IsVisible="{Binding CurrentUser.Photo, Converter={toolkit:IsStringNullOrEmptyConverter}}"
-                        Source="account_circle.png"
                         VerticalOptions="Center"
                         WidthRequest="70">
-                        <ffimageloading:SvgCachedImage.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="White" />
-                        </ffimageloading:SvgCachedImage.Behaviors>
-                    </ffimageloading:SvgCachedImage>
+                        <Label
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource NSExtraBold}"
+                            FontSize="30"
+                            CharacterSpacing="1.5"
+                            Text="{Binding NameInitials}" />
+                    </Border>
                     <ffimageloading:CachedImageView
                         BackgroundColor="{toolkit:AppThemeResource LightGray}"
                         HeightRequest="70"
@@ -91,15 +98,15 @@
                                 Command="{Binding GoToPersonalInformationCommand}"
                                 LeftImageSource="account_outline.png"
                                 Style="{StaticResource SettingsButtonStyle}"
-                                Text="Personal Information" />
+                                Text="{x:Static lang:AppResources.Personal_information}" />
                             <controls:CustomButton
                                 LeftImageSource="shield_outline.png"
                                 Style="{StaticResource SettingsButtonStyle}"
-                                Text="Password &amp; Security" />
+                                Text="{x:Static lang:AppResources.Password___security}" />
                             <controls:CustomButton
                                 LeftImageSource="bell_outline.png"
                                 Style="{StaticResource SettingsButtonStyle}"
-                                Text="Notifications Preferences" />
+                                Text="{x:Static lang:AppResources.Notifications}" />
 
                             <Label
                                 Margin="10"
@@ -123,7 +130,7 @@
                         Margin="15,20"
                         RightImageColor="{toolkit:AppThemeResource RedSalmon}"
                         Style="{StaticResource SettingsButtonStyle}"
-                        Text="Log out"
+                        Text="{x:Static lang:AppResources.Log_out}"
                         TextColor="{toolkit:AppThemeResource RedSalmon}" />
                 </Grid>
             </Border>

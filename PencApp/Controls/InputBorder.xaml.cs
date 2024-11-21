@@ -83,5 +83,5 @@ public partial class InputBorder : Border
     [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWay), DefaultValue = nameof(DefaultFocusedBorderColor))] private readonly Color? _focusedBorderColor;
     [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWay), DefaultValue = nameof(DefaultUnfocusedBorderColor))] private readonly Color? _unfocusedBorderColor;
     [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWay))] private readonly EInputState _inputState;
-    [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWay))] private readonly bool _isInputFocused;
+    [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWay))] private readonly bool? _isInputFocused;
 }

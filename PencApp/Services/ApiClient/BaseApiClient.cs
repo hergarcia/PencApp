@@ -18,21 +18,16 @@ public partial class ApiClient : IApiClient
     async partial void ProcessResponse(HttpClient client, HttpResponseMessage response)
     {
         var _exceptionService = ServiceHelper.GetService<IExceptionService>();
-        try
+        
+        if (response.IsSuccessStatusCode)
         {
-            if (response.IsSuccessStatusCode)
-            {
             
-            }
-            else
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                _exceptionService.HandleRequestServiceErrorAsync(content);
-            }
         }
-        catch (Exception e)
+        else
         {
-            await _exceptionService.HandleExceptionSilentlyAsync(e);
+            var content = await response.Content.ReadAsStringAsync();
+            if(!string.IsNullOrEmpty(content))
+                await _exceptionService!.HandleRequestServiceErrorAsync(content);
         }
     } 
 }

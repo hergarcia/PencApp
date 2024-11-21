@@ -27,9 +27,9 @@ public class DialogService : IDialogService
            Application.Current?.Windows[0].Page?.ShowPopup(_loadingPopup);
     }
 
-    public async Task HideLoading()
+    public void HideLoading()
     {
-        await _loadingPopup?.CloseAsync();
+        _loadingPopup?.Close();
     }
     
     public async Task ShowSnackbar(string message, string actionButtonText, TimeSpan? duration = null, SnackbarOptions? options = null, Action? action = null)

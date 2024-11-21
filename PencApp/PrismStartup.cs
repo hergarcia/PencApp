@@ -42,20 +42,11 @@ internal static class PrismStartup
                 
                 if (isUSerLoggedIn)
                 {
-                    var nav = navigation.CreateBuilder()
-                        // .AddNavigationPage()
-                        .AddTabbedSegment(nameof(MainTabbedPage), b => b
-                            .CreateTab<HomeViewModel>()
-                            .CreateTab<ProfileViewModel>());
-                        // .SelectedTab(nameof(ProfilePage)));
-                    await nav.NavigateAsync();
-                //
-                //     if (result.Success)
-                //     {
-                //         
-                //     }
-                // await navigation.NavigateAsync(nameof(NavigationPage) + "/" + nameof(MainTabbedPage));
-
+                    await navigation.NavigateAsync(
+                        $"{nameof(NavigationPage)}" + "/" + $"{nameof(MainTabbedPage)}" +
+                        $"?{KnownNavigationParameters.CreateTab}={nameof(HomePage)}" +
+                        $"&{KnownNavigationParameters.CreateTab}={nameof(ProfilePage)}" +
+                        $"&{KnownNavigationParameters.SelectedTab}={nameof(ProfilePage)}");
                 }
                 else
                 {

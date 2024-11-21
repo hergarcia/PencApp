@@ -55,7 +55,16 @@ public class UserService(IApiClient apiClient, ISecureStorageService secureStora
 
     public async Task<bool> IsUserLoggedIn()
     {
-        return !string.IsNullOrEmpty(await GetTokenId());
+        var idToken = await GetTokenId();
+
+        if (string.IsNullOrEmpty(idToken))
+        {
+            apiClient.RemoveToken();
+            return false;
+        }
+
+        apiClient.InjectToken(idToken);
+        return true;
     }
 
     public async Task<string?> GetTokenId()

@@ -11,7 +11,7 @@
     <Grid
         ColumnDefinitions="48,*,48"
         MinimumHeightRequest="48"
-        Padding="10,0">
+        Padding="10">
         <ImageButton
             Command="{Binding LeftButtonCommand}"
             IsEnabled="{Binding HasLeftButton}"

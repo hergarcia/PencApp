@@ -77,4 +77,31 @@
     <data name="Loading" xml:space="preserve">
         <value>Cargando...</value>
     </data>
+    <data name="First name" xml:space="preserve">
+        <value>Nombre</value>
+    </data>
+    <data name="Last name" xml:space="preserve">
+        <value>Apellido</value>
+    </data>
+    <data name="Date of birth" xml:space="preserve">
+        <value>Fecha de nacimiento</value>
+    </data>
+    <data name="Phone number" xml:space="preserve">
+        <value>Número de teléfono</value>
+    </data>
+    <data name="User saved success" xml:space="preserve">
+        <value>Usuario guardado con éxito!</value>
+    </data>
+    <data name="Personal information" xml:space="preserve">
+        <value>Información personal</value>
+    </data>
+    <data name="Password &amp; security" xml:space="preserve">
+        <value>Contraseña y seguridad</value>
+    </data>
+    <data name="Notifications" xml:space="preserve">
+        <value>Notificaciones</value>
+    </data>
+    <data name="Log out" xml:space="preserve">
+        <value>Cerrar sesión</value>
+    </data>
 </root>

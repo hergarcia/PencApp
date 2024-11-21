@@ -2,7 +2,8 @@
 
 <tabbedPage:BaseTabPage
     IconImageSource="home.png"
-    Title="Home"
+    Title="{x:Static lang:AppResources.Home}"
+    xmlns:lang="clr-namespace:PencApp.Resources.Languages"
     x:Class="PencApp.Views.Home.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:tabbedPage="clr-namespace:PencApp.Views.TabbedPage"

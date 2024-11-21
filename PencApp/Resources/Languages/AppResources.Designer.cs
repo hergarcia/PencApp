@@ -69,6 +69,15 @@ namespace PencApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date of birth.
+        /// </summary>
+        internal static string Date_of_birth {
+            get {
+                return ResourceManager.GetString("Date of birth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have an account?.
         /// </summary>
         internal static string Don_t_have_an_account_ {
@@ -83,6 +92,15 @@ namespace PencApp.Resources.Languages {
         internal static string Email_address {
             get {
                 return ResourceManager.GetString("Email address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First name.
+        /// </summary>
+        internal static string First_name {
+            get {
+                return ResourceManager.GetString("First name", resourceCulture);
             }
         }
         
@@ -141,6 +159,15 @@ namespace PencApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last name.
+        /// </summary>
+        internal static string Last_name {
+            get {
+                return ResourceManager.GetString("Last name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         internal static string Loading {
@@ -159,11 +186,29 @@ namespace PencApp.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to login.
+        ///   Looks up a localized string similar to Log out.
+        /// </summary>
+        internal static string Log_out {
+            get {
+                return ResourceManager.GetString("Log out", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
         /// </summary>
         internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        internal static string Notifications {
+            get {
+                return ResourceManager.GetString("Notifications", resourceCulture);
             }
         }
         
@@ -182,6 +227,33 @@ namespace PencApp.Resources.Languages {
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password &amp; security.
+        /// </summary>
+        internal static string Password___security {
+            get {
+                return ResourceManager.GetString("Password & security", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal information.
+        /// </summary>
+        internal static string Personal_information {
+            get {
+                return ResourceManager.GetString("Personal information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number.
+        /// </summary>
+        internal static string Phone_number {
+            get {
+                return ResourceManager.GetString("Phone number", resourceCulture);
             }
         }
         
@@ -240,7 +312,16 @@ namespace PencApp.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to login.
+        ///   Looks up a localized string similar to User saved with success!.
+        /// </summary>
+        internal static string User_saved_success {
+            get {
+                return ResourceManager.GetString("User saved success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
         /// </summary>
         internal static string Username {
             get {

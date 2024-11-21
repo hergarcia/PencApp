@@ -2,11 +2,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using CommunityToolkit.Mvvm.Input;
 using PencApp.Controls;
+using PencApp.Helpers;
 using PencApp.Resources.Languages;
 using PencApp.Services.Exceptions;
 using PencApp.Services.User;
 using PencApp.ViewModels.Home;
 using PencApp.ViewModels.Profile;
+using PencApp.Views.Home;
 using PencApp.Views.Profile;
 using PencApp.Views.TabbedPage;
 using IDialogService = PencApp.Services.Dialogs.IDialogService;
@@ -34,37 +36,7 @@ public partial class LoginViewModel(INavigationService navigationService, IExcep
 
     public bool IsContinueEnabled => /*EmailEntryState == EInputState.Completed &&*/ PasswordEntryState == EInputState.Completed;
 
-    public override void OnAppearing()
-    {
-
-        // MainThread.BeginInvokeOnMainThread(async () =>
-        // {
-        //     var isUserLoggedIn  = await userService.IsUserLoggedIn();
-        //     if (isUserLoggedIn)
-        //     {
-        //         await NavigateToMainTabbedPage();
-        //     }
-        // });
-        base.OnAppearing();
-
-    }
-
-    public override void OnNavigatedTo(INavigationParameters parameters)
-    {
-        
-        
-        base.OnNavigatedTo(parameters);
-    }
-
-    public override Task OnAndroidBackButtonPressed()
-    {
-        return base.OnAndroidBackButtonPressed();
-    }
-
-    public override async Task InitializeAsync(INavigationParameters parameters)
-    {
-    }
-
+    
     [RelayCommand (CanExecute = nameof(IsContinueEnabled))]
     private async Task Continue()
     {
@@ -91,15 +63,11 @@ public partial class LoginViewModel(INavigationService navigationService, IExcep
 
     private async Task NavigateToMainTabbedPage()
     {
-        var nav = NavigationService.CreateBuilder()
-            // .AddNavigationPage()
-            .AddTabbedSegment(nameof(MainTabbedPage), b => b
-                .CreateTab<HomeViewModel>()
-                .CreateTab<ProfileViewModel>()
-                .SelectedTab(nameof(ProfilePage)))
-            .UseAbsoluteNavigation(true);
-        
-           var result = await nav.NavigateAsync();
+        await NavigationService.NavigateAsync(
+            $"{nameof(NavigationPage)}" + "/" + $"{nameof(MainTabbedPage)}" +
+            $"?{KnownNavigationParameters.CreateTab}={nameof(HomePage)}" +
+            $"&{KnownNavigationParameters.CreateTab}={nameof(ProfilePage)}" +
+            $"&{KnownNavigationParameters.SelectedTab}={nameof(ProfilePage)}");
     }
 
     [RelayCommand]
@@ -113,10 +81,6 @@ public partial class LoginViewModel(INavigationService navigationService, IExcep
         };
 
         await AuthenticateAndNavigate(loginData);
-        
-        // await NavigationService.CreateBuilder()
-        //     .AddSegment<IntroViewModel>(true)
-        //     .NavigateAsync();
     }
 
     [RelayCommand]
