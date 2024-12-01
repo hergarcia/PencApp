@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <tabbedPage:BaseTabPage
     IconImageSource="account.png"
@@ -7,33 +7,30 @@
     x:DataType="vm:ProfileViewModel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:controls="clr-namespace:PencApp.Controls"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:lang="clr-namespace:PencApp.Resources.Languages"
+    xmlns:sk="clr-namespace:Maui.Skeleton;assembly=Maui.Skeleton"
     xmlns:styles="clr-namespace:PencApp.Resources.Styles"
     xmlns:tabbedPage="clr-namespace:PencApp.Views.TabbedPage"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:PencApp.ViewModels.Profile"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="{toolkit:AppThemeResource BlueHeader}" StatusBarStyle="LightContent" />
-    </ContentPage.Behaviors>
-
-    <ContentPage.Resources>
+    <tabbedPage:BaseTabPage.Resources>
         <Style TargetType="controls:CustomButton" x:Key="SettingsButtonStyle">
             <Setter Property="RightImageSource" Value="chevron_right_light.png" />
-            <Setter Property="RightImageColor" Value="{toolkit:AppThemeResource BlueHeader}" />
-            <Setter Property="TextColor" Value="{toolkit:AppThemeResource BlueHeader}" />
+            <Setter Property="RightImageColor" Value="{toolkit:AppThemeResource PrimaryDarkBlue}" />
+            <Setter Property="TextColor" Value="{toolkit:AppThemeResource PrimaryDarkBlue}" />
             <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="IsEnabled" Value="{Binding LoadingUserData, Converter={toolkit:InvertedBoolConverter}}" />
         </Style>
-    </ContentPage.Resources>
+    </tabbedPage:BaseTabPage.Resources>
 
-    <ContentPage.Content>
+    <tabbedPage:BaseTabPage.Content>
         <Grid
-            BackgroundColor="{toolkit:AppThemeResource BlueHeader}"
+            BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlue}"
             RowDefinitions="Auto,*"
-            RowSpacing="10">
-            <VerticalStackLayout Margin="15,0" Spacing="20">
+            RowSpacing="20">
+            <VerticalStackLayout Margin="20,0" Spacing="20">
                 <Label
                     HorizontalOptions="Start"
                     Style="{StaticResource SubHeadline}"
@@ -41,40 +38,52 @@
                     TextColor="White" />
                 <HorizontalStackLayout Spacing="10">
                     <Border
-                        StrokeThickness="0"
                         BackgroundColor="White"
-                        StrokeShape="Ellipse"
                         HeightRequest="70"
                         HorizontalOptions="Center"
-                        IsVisible="{Binding CurrentUser.Photo, Converter={toolkit:IsStringNullOrEmptyConverter}}"
-                        VerticalOptions="Center"
-                        WidthRequest="70">
-                        <Label
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center"
-                            Style="{StaticResource NSExtraBold}"
-                            FontSize="30"
-                            CharacterSpacing="1.5"
-                            Text="{Binding NameInitials}" />
-                    </Border>
-                    <ffimageloading:CachedImageView
-                        BackgroundColor="{toolkit:AppThemeResource LightGray}"
-                        HeightRequest="70"
-                        HorizontalOptions="Start"
-                        IsVisible="{Binding CurrentUser.Photo, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
-                        Source="{Binding CurrentUser.Photo}"
+                        StrokeShape="Ellipse"
                         StrokeThickness="0"
                         VerticalOptions="Center"
-                        WidthRequest="70" />
-                    <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                        WidthRequest="70"
+                        sk:Skeleton.Animation="{sk:DefaultAnimation Source=Fade,
+                                                                    Interval='600',
+                                                                    Parameter='.5'}"
+                        sk:Skeleton.BackgroundColor="{toolkit:AppThemeResource LightGray}"
+                        sk:Skeleton.IsBusy="{Binding LoadingUserData}"
+                        sk:Skeleton.IsParent="True">
+                        <Label
+                            CharacterSpacing="1.5"
+                            FontSize="30"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource NSExtraBold}"
+                            Text="{Binding NameInitials}"
+                            VerticalOptions="Center"
+                            sk:Skeleton.Hide="True"
+                            sk:Skeleton.IsBusy="{Binding LoadingUserData}" />
+                    </Border>
+                    <VerticalStackLayout
+                        HorizontalOptions="Fill"
+                        MinimumWidthRequest="200"
+                        Spacing="5"
+                        VerticalOptions="Center">
                         <Label
                             Style="{StaticResource NSBold}"
                             Text="{Binding CurrentUser.DisplayName}"
-                            TextColor="White" />
+                            TextColor="White"
+                            sk:Skeleton.Animation="{sk:DefaultAnimation Source=Fade,
+                                                                        Interval='600',
+                                                                        Parameter='.5'}"
+                            sk:Skeleton.BackgroundColor="{toolkit:AppThemeResource LightGray}"
+                            sk:Skeleton.IsBusy="{Binding LoadingUserData}" />
                         <Label
                             Style="{StaticResource NSLight}"
                             Text="{Binding CurrentUser.EmailAddress}"
-                            TextColor="White" />
+                            TextColor="White"
+                            sk:Skeleton.Animation="{sk:DefaultAnimation Source=Fade,
+                                                                        Interval='600',
+                                                                        Parameter='.5'}"
+                            sk:Skeleton.BackgroundColor="{toolkit:AppThemeResource LightGray}"
+                            sk:Skeleton.IsBusy="{Binding LoadingUserData}" />
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
@@ -82,44 +91,33 @@
             <Border
                 BackgroundColor="{toolkit:AppThemeResource AppBackgroundColor}"
                 Grid.Row="1"
-                StrokeShape="{RoundRectangle CornerRadius={x:Static styles:UiConstants.TopRoundedDefaultCornerRadius}}"
+                StrokeShape="{RoundRectangle CornerRadius={x:Static styles:UiConstants.TopRoundedWideCornerRadius}}"
                 StrokeThickness="0">
                 <Grid RowDefinitions="*,Auto">
                     <ScrollView
                         Orientation="Vertical"
                         Padding="15,20"
                         VerticalScrollBarVisibility="Never">
-                        <VerticalStackLayout>
+                        <VerticalStackLayout Spacing="5">
                             <Label
-                                Margin="10,0,10,10"
+                                Margin="10,0,10,5"
                                 Style="{StaticResource NSLight}"
-                                Text="Account Settings" />
+                                Text="{x:Static lang:AppResources.Account_settings}" />
                             <controls:CustomButton
                                 Command="{Binding GoToPersonalInformationCommand}"
                                 LeftImageSource="account_outline.png"
                                 Style="{StaticResource SettingsButtonStyle}"
                                 Text="{x:Static lang:AppResources.Personal_information}" />
                             <controls:CustomButton
+                                Command="{Binding GoToChangePasswordCommand}"
                                 LeftImageSource="shield_outline.png"
                                 Style="{StaticResource SettingsButtonStyle}"
-                                Text="{x:Static lang:AppResources.Password___security}" />
+                                Text="{x:Static lang:AppResources.Change_password}" />
                             <controls:CustomButton
+                                Command="{Binding GoToNotificationsCommand}"
                                 LeftImageSource="bell_outline.png"
                                 Style="{StaticResource SettingsButtonStyle}"
                                 Text="{x:Static lang:AppResources.Notifications}" />
-
-                            <Label
-                                Margin="10"
-                                Style="{StaticResource NSLight}"
-                                Text="Other" />
-                            <controls:CustomButton
-                                LeftImageSource="account_outline.png"
-                                Style="{StaticResource SettingsButtonStyle}"
-                                Text="Personal Information" />
-                            <controls:CustomButton
-                                LeftImageSource="shield_outline.png"
-                                Style="{StaticResource SettingsButtonStyle}"
-                                Text="Password &amp; Security" />
                         </VerticalStackLayout>
                     </ScrollView>
                     <controls:CustomButton
@@ -135,5 +133,5 @@
                 </Grid>
             </Border>
         </Grid>
-    </ContentPage.Content>
+    </tabbedPage:BaseTabPage.Content>
 </tabbedPage:BaseTabPage>

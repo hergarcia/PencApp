@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using PencApp.Helpers;
 using PencApp.Services.Exceptions;
 
@@ -25,9 +26,18 @@ public partial class ApiClient : IApiClient
         }
         else
         {
-            var content = await response.Content.ReadAsStringAsync();
-            if(!string.IsNullOrEmpty(content))
-                await _exceptionService!.HandleRequestServiceErrorAsync(content);
+            try
+            {
+                var contentString = await response.Content.ReadAsStringAsync();
+                var content = Newtonsoft.Json.JsonConvert.DeserializeObject<ApiExceptionContent>(contentString);
+                    
+                if(content is not null)
+                    await _exceptionService!.HandleRequestServiceErrorAsync(content);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
     } 
 }

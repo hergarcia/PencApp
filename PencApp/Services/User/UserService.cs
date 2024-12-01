@@ -1,24 +1,32 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using PencApp.Services.ApiClient;
 using PencApp.Services.SecureStorage;
 
 namespace PencApp.Services.User;
 
-public class UserService(IApiClient apiClient, ISecureStorageService secureStorageService) : IUserService
+public partial class UserService(IApiClient apiClient,  ISecureStorageService secureStorageService) : ObservableRecipient, IUserService
 {
-    private static Models.User? _currentUser;
-    
+    [ObservableProperty, NotifyPropertyChangedRecipients]
+    private Models.User? _currentUser;
+
+    protected override void Broadcast<T>(T oldValue, T newValue, string? propertyName)
+    {
+        CurrentUserChangedMessage message = new(CurrentUser);
+        WeakReferenceMessenger.Default.Send(message, IUserService.CurrentUserChangedToken);
+    }
+
     public async Task<Models.User?> GetCurrentUser(bool refreshIfNull = true)
     {
-        if (_currentUser is null && refreshIfNull)
+        if (CurrentUser is null && refreshIfNull)
             return await UpdateUserDataAsync();
-        
-        return _currentUser;
+
+        return CurrentUser;
     }
     
     public async Task LoginAsync(Models.User user)
     {
-        var token = await apiClient.AuthenticatePostAsync(user.ToLoginVM());
+        var token = await apiClient.AuthorizeAsync(user.ToLoginVM());
         
         if (!string.IsNullOrEmpty(token.Id_token))
         {
@@ -30,27 +38,31 @@ public class UserService(IApiClient apiClient, ISecureStorageService secureStora
 
     public async Task RegisterAsync(Models.User user)
     {
-        await apiClient.RegisterAsync(user.ToManagedUserVM());
+        await apiClient.RegisterAccountAsync(user.ToManagedUserVM());
     }
 
+    public void UpdateUserData()
+    {
+        Task.Run(async () => await UpdateUserDataAsync());
+    }
+    
     public async Task<Models.User?> UpdateUserDataAsync()
     {
-        var response = await apiClient.AccountGetAsync();
-        _currentUser = response?.ToUser();
-        WeakReferenceMessenger.Default.Send(_currentUser);
-        return _currentUser;
+        var response = await apiClient.GetAccountAsync();
+        CurrentUser = response?.ToUser();
+        return CurrentUser;
     }
-
+    
     public async Task SaveUser(Models.User user)
     {
-        await apiClient.AccountPostAsync(user.ToAdminUserDTO());
+        await apiClient.SaveAccountAsync(user.ToAdminUserDTO());
     }
 
     public void Logout()
     {
         apiClient.RemoveToken();
         secureStorageService.Clear(IUserService.IdTokenKey);
-        _currentUser = null;
+        CurrentUser = null;
     }
 
     public async Task<bool> IsUserLoggedIn()
@@ -71,5 +83,10 @@ public class UserService(IApiClient apiClient, ISecureStorageService secureStora
     {
         var idToken = await secureStorageService.GetAsync(IUserService.IdTokenKey);
         return idToken;
+    }
+
+    public async Task ChangeUserPassword(PasswordChangeDTO passwordChangeDTO)
+    {
+        await apiClient.ChangePasswordAsync(passwordChangeDTO);
     }
 }

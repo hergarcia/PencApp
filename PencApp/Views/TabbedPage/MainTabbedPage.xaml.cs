@@ -13,7 +13,7 @@ public partial class MainTabbedPage : Microsoft.Maui.Controls.TabbedPage
         
         Behaviors.Add(new StatusBarBehavior
         {
-            StatusBarColor = (Color)ApplicationResources.GetResource("BlueHeader"),
+            StatusBarColor = (Color)ApplicationResources.GetResource("PrimaryDarkBlue"),
             StatusBarStyle = StatusBarStyle.LightContent,
             ApplyOn = StatusBarApplyOn.OnPageNavigatedTo
         });

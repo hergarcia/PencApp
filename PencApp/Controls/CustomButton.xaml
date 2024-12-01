@@ -48,5 +48,10 @@
                 </ffimageloading:SvgCachedImage.Behaviors>
             </ffimageloading:SvgCachedImage>
         </Grid>
+        <Grid.Triggers>
+            <DataTrigger TargetType="Grid" Binding="{Binding IsEnabled}" Value="False">
+                <Setter Property="Opacity" Value=".2"/>
+            </DataTrigger>
+        </Grid.Triggers>
     </Grid>
 </ContentView>

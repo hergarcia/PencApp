@@ -1,7 +1,6 @@
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Platform;
-using PencApp.Helpers;
 using PencApp.Resources.Languages;
 using PencApp.Services.ApiClient;
 using PencApp.Services.Exceptions;
@@ -18,8 +17,9 @@ public partial class PersonalInformationViewModel(
     IDialogService dialogService)
     : BaseViewModel(navigationService, exceptionService)
 {
-    [ObservableProperty]
     private User? _currentUser;
+
+    [ObservableProperty] private string? _username;
     
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SaveUserCommand))]
@@ -42,30 +42,42 @@ public partial class PersonalInformationViewModel(
     private string? _phoneNumber;
 
 
-    public bool DataHasChanged => FirstName != CurrentUser?.FirstName || LastName != CurrentUser?.LastName ||
-                                  EmailAddress != CurrentUser?.EmailAddress ||
-                                  !DateOfBirth.Equals(CurrentUser?.DateOfBirth) || PhoneNumber != CurrentUser?.PhoneNumber;
-    
-    public override async Task InitializeAsync(INavigationParameters parameters)
+    public bool DataHasChanged => FirstName != _currentUser?.FirstName
+                                  || LastName != _currentUser?.LastName
+                                  || EmailAddress != _currentUser?.EmailAddress
+                                  || !DateOfBirth.Equals(_currentUser?.DateOfBirth)
+                                  || PhoneNumber != _currentUser?.PhoneNumber;
+
+    public override void OnNavigatedTo(INavigationParameters parameters)
     {
         try
         {
-            CurrentUser = await userService.GetCurrentUser();
-            
-            if (CurrentUser is not null)
+            if (_currentUser is null)
             {
-                FirstName = CurrentUser.FirstName;
-                LastName = CurrentUser.LastName;
-                EmailAddress = CurrentUser.EmailAddress;
-                DateOfBirth = CurrentUser.DateOfBirth;
-                PhoneNumber = CurrentUser.PhoneNumber;
+                throw new Exception("No current user");
             }
+
+            Username = _currentUser.Username;
+            FirstName = _currentUser.FirstName;
+            LastName = _currentUser.LastName;
+            EmailAddress = _currentUser.EmailAddress;
+            DateOfBirth = _currentUser.DateOfBirth;
+            PhoneNumber = _currentUser.PhoneNumber;
         }
         catch (Exception e)
         {
-            await ExceptionService.HandleExceptionAsync(e);
-            await GoBackAsync();
+            MainThread.BeginInvokeOnMainThread(async void () =>
+            {
+                await ExceptionService.HandleExceptionAsync(e, async void () => await GoBackAsync());
+            }); 
         }
+        
+        base.OnNavigatedTo(parameters);
+    }
+
+    public override async Task InitializeAsync(INavigationParameters parameters)
+    {
+        parameters.TryGetValue<User>(nameof(ProfileViewModel.CurrentUser), out _currentUser);
         await base.InitializeAsync(parameters);
     }
 
@@ -76,7 +88,7 @@ public partial class PersonalInformationViewModel(
         
         var userData = new User()
         {
-            Username = CurrentUser!.Username,
+            Username = _currentUser!.Username,
             EmailAddress = EmailAddress,
             FirstName = FirstName,
             LastName = LastName
@@ -86,32 +98,28 @@ public partial class PersonalInformationViewModel(
         {
             await userService.SaveUser(userData);
             await userService.UpdateUserDataAsync();
+            
+            dialogService.HideLoading();
             await dialogService.ShowToast(AppResources.User_saved_success);
             await GoBackAsync();
         }
         catch (Exception e)
         {
-            await dialogService.ShowToast(e.Message);
-            Console.WriteLine(e);
-        }
-        finally
-        {
             dialogService.HideLoading();
-        }
-    }
-
-    public override void OnNavigatedFrom(INavigationParameters parameters)
-    {
-        base.OnNavigatedFrom(parameters);
-#if ANDROID
-        var isBackNavigation = parameters.GetValue<bool>(IsBackNavigation);
-        if (isBackNavigation)
-        {
-            MainThread.BeginInvokeOnMainThread(() =>
+            
+            if (e is ApiException apiException)
             {
-                Platform.CurrentActivity.Window.SetNavigationBarColor(((Color)ApplicationResources.GetResource("BlueHeader")).ToPlatform());
-            });
+                var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ApiExceptionContent>(apiException.Response);
+
+                if (response?.Detail != null)
+                {
+                    await dialogService.ShowToast(response.Detail);
+                    return;
+                }
+            }
+
+            await ExceptionService.HandleExceptionAsync(e);
+            Debug.WriteLine(e);
         }
-#endif
     }
 }

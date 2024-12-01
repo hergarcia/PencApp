@@ -1,13 +1,11 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using CommunityToolkit.Mvvm.Input;
 using PencApp.Controls;
-using PencApp.Helpers;
+using PencApp.Models;
 using PencApp.Resources.Languages;
 using PencApp.Services.Exceptions;
 using PencApp.Services.User;
-using PencApp.ViewModels.Home;
-using PencApp.ViewModels.Profile;
+using PencApp.ViewModels.Shared;
 using PencApp.Views.Home;
 using PencApp.Views.Profile;
 using PencApp.Views.TabbedPage;
@@ -91,6 +89,21 @@ public partial class LoginViewModel(INavigationService navigationService, IExcep
             .NavigateAsync();
     }
 
+    [RelayCommand]
+    private async Task GoToForgotPassword()
+    {
+        await NavigationService.CreateBuilder()
+            .AddSegment<SimpleErrorPopupViewModel>(useModalNavigation: true)
+            .AddParameter(nameof(SimpleErrorPopupViewModel.SimpleError), new SimpleError()
+            {
+                Title = "Error",
+                Message = "Please try again.",
+                Icon = "alert_circle.png",
+                ButtonText = "Ok"
+            })
+            .NavigateAsync();
+    }
+
     // partial void OnEmailChanged(string? value)
     // {
     //     try
@@ -116,7 +129,7 @@ public partial class LoginViewModel(INavigationService navigationService, IExcep
     //     }
     //     catch (Exception e)
     //     {
-    //         Console.WriteLine(e);
+    //         Debug.WriteLine(e);
     //         throw;
     //     }
     // }

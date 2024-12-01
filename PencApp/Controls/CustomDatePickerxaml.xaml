@@ -4,6 +4,7 @@
     x:Class="PencApp.Controls.CustomDatePicker"
     x:DataType="local:CustomDatePicker"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:local="clr-namespace:PencApp.Controls"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
@@ -24,29 +25,42 @@
             IsInputFocused="{Binding Source={x:Reference PlaceholderLabel}, Path=IsFocused}"
             UnfocusedBorderColor="{Binding UnfocusedBorderColor}">
 
-            <Grid ColumnDefinitions="*,Auto">
+            <Grid ColumnDefinitions="*,1,Auto" ColumnSpacing="10">
                 <Label
                     FontSize="10"
                     HorizontalOptions="Start"
                     IsVisible="{Binding Placeholder, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
-                    Margin="20,10"
+                    Margin="20,10,0,10"
                     Style="{StaticResource InputPlaceholderStyle}"
                     Text="{Binding Placeholder}"
                     TextColor="{Binding PlaceholderColor}"
                     VerticalOptions="Start"
                     x:Name="PlaceholderLabel" />
                 <DatePicker
+                    Date="{Binding Date}"
                     Focused="DatePicker_OnFocused"
                     FontAttributes="Bold"
                     FontSize="12"
                     Margin="17,15,0,0"
                     Style="{Binding DatePickerStyle}"
-                    Date="{Binding Date}"
                     TextColor="{Binding TextColor}"
                     Unfocused="DatePicker_OnUnfocused"
                     VerticalOptions="End"
                     x:Name="DatePicker" />
-                </Grid>
+                <BoxView
+                    Color="{Binding UnfocusedBorderColor}"
+                    Grid.Column="1"
+                    Margin="0,10"
+                    WidthRequest="1" />
+                <ffimageloading:CachedImage
+                    Grid.Column="2"
+                    Margin="0,0,10,0"
+                    Source="calendar_edit.png">
+                    <ffimageloading:CachedImage.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{Binding TextColor}" />
+                    </ffimageloading:CachedImage.Behaviors>
+                </ffimageloading:CachedImage>
+            </Grid>
 
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />

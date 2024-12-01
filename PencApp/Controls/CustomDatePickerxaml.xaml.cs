@@ -9,7 +9,7 @@ namespace PencApp.Controls;
 public partial class CustomDatePicker : ContentView, IInputBase
 {
     private static readonly Color DefaultTextColor = (Color)ApplicationResources.GetResource("DarkGreen");
-    private static readonly Color DefaultFocusedBorderColor = (Color)ApplicationResources.GetResource("BlueHeader");
+    private static readonly Color DefaultFocusedBorderColor = (Color)ApplicationResources.GetResource("PrimaryDarkBlue");
     private static readonly Color DefaultUnfocusedBorderColor = (Color)ApplicationResources.GetResource("LightGray");
     private static readonly Color DefaultPlaceholderColor = Colors.Gray;
     private static readonly Color DefaultCleanButtonBackgroundColor = (Color)ApplicationResources.GetResource("DarkGreen");

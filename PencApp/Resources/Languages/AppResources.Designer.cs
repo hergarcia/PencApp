@@ -60,6 +60,24 @@ namespace PencApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Settings.
+        /// </summary>
+        internal static string Account_settings {
+            get {
+                return ResourceManager.GetString("Account settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        internal static string Change_password {
+            get {
+                return ResourceManager.GetString("Change password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue with Google.
         /// </summary>
         internal static string Continue_with_Google {
@@ -69,11 +87,29 @@ namespace PencApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current password.
+        /// </summary>
+        internal static string Current_password {
+            get {
+                return ResourceManager.GetString("Current password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         internal static string Date_of_birth {
             get {
                 return ResourceManager.GetString("Date of birth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops... something went wrong.
+        /// </summary>
+        internal static string Default_exception_title {
+            get {
+                return ResourceManager.GetString("Default exception title", resourceCulture);
             }
         }
         
@@ -204,6 +240,15 @@ namespace PencApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        internal static string New_password {
+            get {
+                return ResourceManager.GetString("New password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notifications.
         /// </summary>
         internal static string Notifications {
@@ -290,6 +335,15 @@ namespace PencApp.Resources.Languages {
         internal static string Repeate_password {
             get {
                 return ResourceManager.GetString("Repeate password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         

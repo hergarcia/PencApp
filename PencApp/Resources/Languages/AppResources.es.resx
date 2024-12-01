@@ -104,4 +104,22 @@
     <data name="Log out" xml:space="preserve">
         <value>Cerrar sesión</value>
     </data>
+    <data name="Change password" xml:space="preserve">
+        <value>Cambiar contraseña</value>
+    </data>
+    <data name="Current password" xml:space="preserve">
+        <value>Contraseña actual</value>
+    </data>
+    <data name="New password" xml:space="preserve">
+        <value>Nueva contraseña</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Guardar</value>
+    </data>
+    <data name="Default exception title" xml:space="preserve">
+        <value>Ups... Algo salió mal</value>
+    </data>
+    <data name="Account settings" xml:space="preserve">
+        <value>Ajustes de Cuenta</value>
+    </data>
 </root>

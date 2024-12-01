@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<shared:CustomContentPage
+    BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlueTransparent}"
+    x:Class="PencApp.Views.Shared.SimpleErrorPopupPage"
+    x:DataType="vm:SimpleErrorPopupViewModel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:shared="clr-namespace:PencApp.Views.Shared"
+    xmlns:styles="clr-namespace:PencApp.Resources.Styles"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PencApp.ViewModels.Shared"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <shared:CustomContentPage.Content>
+        <Border
+            BackgroundColor="{toolkit:AppThemeResource AppBackgroundColor}"
+            HorizontalOptions="Fill"
+            Margin="20"
+            Padding="20"
+            Shadow="{Shadow Brush=Black,
+                            Opacity=.3,
+                            Radius=20}"
+            StrokeShape="{RoundRectangle CornerRadius={x:Static styles:UiConstants.RoundedCornerRadius}}"
+            StrokeThickness="0"
+            VerticalOptions="Center">
+            <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="10">
+                <ffimageloading:CachedImage
+                    HeightRequest="{Binding Source={RelativeSource Self}, Path=WidthRequest}"
+                    Source="{Binding SimpleError.Icon}"
+                    WidthRequest="80">
+                    <ffimageloading:CachedImage.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{toolkit:AppThemeResource RedSalmon}" />
+                    </ffimageloading:CachedImage.Behaviors>
+                </ffimageloading:CachedImage>
+                <Label
+                    FontSize="20"
+                    Grid.Row="1"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource NSBold}"
+                    Text="{Binding SimpleError.Title}" />
+                <ScrollView Grid.Row="2" VerticalOptions="Start">
+                    <Label HorizontalTextAlignment="Start" Text="{Binding SimpleError.Message}" />
+                </ScrollView>
+                <Button
+                    Command="{Binding ButtonCommandCommand}"
+                    Grid.Row="3"
+                    Text="{Binding SimpleError.ButtonText}" />
+            </Grid>
+        </Border>
+    </shared:CustomContentPage.Content>
+</shared:CustomContentPage>

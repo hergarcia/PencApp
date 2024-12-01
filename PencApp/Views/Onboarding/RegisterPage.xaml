@@ -1,40 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<ContentPage
+<shared:CustomContentPage
     x:Class="PencApp.Views.Onboarding.RegisterPage"
     x:DataType="vm:RegisterViewModel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:controls="clr-namespace:PencApp.Controls"
     xmlns:lang="clr-namespace:PencApp.Resources.Languages"
+    xmlns:shared="clr-namespace:PencApp.Views.Shared"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:PencApp.ViewModels.Onboarding"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <ContentPage.Content>
-        <Grid BackgroundColor="{toolkit:AppThemeResource BlueHeader}" RowDefinitions="Auto,*">
-            <VerticalStackLayout Margin="0,10,0,20" Spacing="5">
-                <ImageButton
-                    Command="{Binding GoBackCommand}"
-                    HorizontalOptions="Start"
-                    Margin="10,0"
-                    Source="arrow_left.png"
-                    Style="{StaticResource NavigationBarImageButtonStyle}">
-                    <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="White" />
-                    </ImageButton.Behaviors>
-                </ImageButton>
-
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="42"
-                    Margin="20,0"
-                    Text="{x:Static lang:AppResources.Register}"
-                    TextColor="White" />
-                <Label
-                    FontFamily="NSLight"
-                    Margin="20,0"
-                    Text="{x:Static lang:AppResources.Register_page_message}"
-                    TextColor="{toolkit:AppThemeResource LightGray}" />
-            </VerticalStackLayout>
+    <shared:CustomContentPage.Content>
+        <Grid
+            BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlue}"
+            RowDefinitions="Auto,*"
+            RowSpacing="10">
+            <controls:CustomNavigationBar
+                LeftButtonCommand="{Binding GoBackCommand}"
+                LeftButtonIconColor="White"
+                SubTitle="{x:Static lang:AppResources.Register_page_message}"
+                Title="{x:Static lang:AppResources.Register}" />
             <Grid
                 BackgroundColor="White"
                 Grid.Row="1"
@@ -75,5 +60,5 @@
                 </HorizontalStackLayout>
             </Grid>
         </Grid>
-    </ContentPage.Content>
-</ContentPage>
+    </shared:CustomContentPage.Content>
+</shared:CustomContentPage>

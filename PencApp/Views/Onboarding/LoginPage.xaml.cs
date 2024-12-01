@@ -2,10 +2,11 @@ using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;
 using PencApp.Helpers;
+using PencApp.Views.Shared;
 
 namespace PencApp.Views.Onboarding;
 
-public partial class LoginPage : ContentPage
+public partial class LoginPage : CustomContentPage
 {
     public LoginPage()
     {
@@ -13,7 +14,7 @@ public partial class LoginPage : ContentPage
         
         Behaviors.Add(new StatusBarBehavior
         {
-            StatusBarColor = (Color)ApplicationResources.GetResource("BlueHeader"),
+            StatusBarColor = (Color)ApplicationResources.GetResource("PrimaryDarkBlue"),
             StatusBarStyle = StatusBarStyle.LightContent,
             ApplyOn = StatusBarApplyOn.OnPageNavigatedTo
         });

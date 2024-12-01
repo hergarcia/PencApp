@@ -54,7 +54,12 @@
     <toolkit:AppThemeColor
         Dark="#0c1c2c"
         Light="#0c1c2c"
-        x:Key="BlueHeader" />
+        x:Key="PrimaryDarkBlue" />
+
+    <toolkit:AppThemeColor
+        Dark="#200c1c2c"
+        Light="#200c1c2c"
+        x:Key="PrimaryDarkBlueTransparent" />
 
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>

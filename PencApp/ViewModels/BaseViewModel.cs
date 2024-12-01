@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.LifecycleEvents;
 using PencApp.Helpers;
 using PencApp.Services.Exceptions;
 using INavigationParameters = Prism.Navigation.INavigationParameters;
@@ -11,6 +10,8 @@ public partial class BaseViewModel : ObservableObject, IDestructible, IApplicati
 {
     public const string IsBackNavigation = nameof(IsBackNavigation);
 
+    [ObservableProperty] private string? _pageTitle;
+    
     public INavigationService NavigationService { get; }
     public IExceptionService ExceptionService { get; }
 
@@ -65,8 +66,11 @@ public partial class BaseViewModel : ObservableObject, IDestructible, IApplicati
     {
         
     }
-    
-    public virtual async Task OnAndroidBackButtonPressed() => await GoBackAsync();
+
+    public virtual Task OnAndroidBackButtonPressedAsync()
+    {
+        return Task.CompletedTask;
+    }
 
     public async Task<INavigationResult> GoBackAsync()
     {

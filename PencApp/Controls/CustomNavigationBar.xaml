@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentView
     x:Class="PencApp.Controls.CustomNavigationBar"
@@ -9,42 +9,81 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid
-        ColumnDefinitions="48,*,48"
-        MinimumHeightRequest="48"
-        Padding="10">
+        ColumnDefinitions="44,*,44"
+        Padding="20,0"
+        RowDefinitions="44,*"
+        RowSpacing="20">
+        <Grid.Triggers>
+            <MultiTrigger TargetType="Grid">
+                <MultiTrigger.Conditions>
+                    <BindingCondition Binding="{Binding HasLeftButton}" Value="False" />
+                    <BindingCondition Binding="{Binding HasRightButton}" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="RowSpacing" Value="0" />
+                <Setter Property="RowDefinitions" Value="0,*" />
+            </MultiTrigger>
+        </Grid.Triggers>
         <ImageButton
+            BackgroundColor="{Binding LeftButtonBackgroundColor}"
+            BorderColor="{Binding LeftButtonBorderColor}"
             Command="{Binding LeftButtonCommand}"
             IsEnabled="{Binding HasLeftButton}"
             IsVisible="{Binding HasLeftButton}"
+            PropertyChanged="LeftButton_OnPropertyChanged"
             Source="{Binding LeftButtonImage}"
-            BackgroundColor="{Binding LeftButtonBackgroundColor}"
             Style="{StaticResource NavigationBarImageButtonStyle}">
             <ImageButton.Behaviors>
                 <toolkit:IconTintColorBehavior TintColor="{Binding LeftButtonIconColor}" />
             </ImageButton.Behaviors>
         </ImageButton>
 
-        <Label
-            FontAttributes="Bold"
-            FontSize="18"
-            Grid.Column="1"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Text="{Binding Title}"
-            TextColor="{Binding TextColor}"
-            VerticalOptions="Center" />
+        <VerticalStackLayout
+            Grid.ColumnSpan="3"
+            Grid.Row="1"
+            Spacing="5"
+            VerticalOptions="Center">
+            <Label
+                FontSize="42"
+                Style="{StaticResource NSBold}"
+                Text="{Binding Title}"
+                TextColor="{Binding TextColor}" />
+            <Label
+                IsVisible="{Binding SubTitle, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
+                Style="{StaticResource NSLight}"
+                Text="{Binding SubTitle}"
+                TextColor="{toolkit:AppThemeResource LightGray}" />
+        </VerticalStackLayout>
 
         <ImageButton
+            BackgroundColor="{Binding RightButtonBackgroundColor}"
+            BorderColor="{Binding RightButtonBorderColor}"
             Command="{Binding RightButtonCommand}"
-            Grid.Column="2"            BackgroundColor="{Binding RightButtonBackgroundColor}"
-
+            Grid.Column="2"
             IsEnabled="{Binding HasRightButton}"
             IsVisible="{Binding HasRightButton}"
+            PropertyChanged="RightButton_OnPropertyChanged"
             Source="{Binding RightButtonImage}"
             Style="{StaticResource NavigationBarImageButtonStyle}">
             <ImageButton.Behaviors>
-                <toolkit:IconTintColorBehavior TintColor="{Binding LeftButtonIconColor}" />
+                <toolkit:IconTintColorBehavior TintColor="{Binding RightButtonIconColor}" />
             </ImageButton.Behaviors>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters />
+                        </VisualState>
+
+                        <VisualState Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Opacity" Value=".5" />
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                <Setter Property="BorderColor" Value="{Binding RightButtonBackgroundColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
         </ImageButton>
     </Grid>
 </ContentView>

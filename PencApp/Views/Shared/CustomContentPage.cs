@@ -1,17 +1,24 @@
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;
+using PencApp.Helpers;
 using PencApp.ViewModels;
 
 namespace PencApp.Views.Shared;
 
 public class CustomContentPage : ContentPage
 {
-    // protected override bool OnBackButtonPressed()
-    // {
-    //     var viewModel = (BaseViewModel)BindingContext;
-    //     if (viewModel != null)
-    //     {
-    //         MainThread.BeginInvokeOnMainThread(async () => viewModel.OnAndroidBackButtonPressed());
-    //     }
-    //
-    //     return base.OnBackButtonPressed();
-    // }
+    public CustomContentPage()
+    {
+        On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().SetColor((Color)ApplicationResources.GetResource("AppBackgroundColor")!);
+        On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().SetStyle(NavigationBarStyle.DarkContent);
+    }
+
+    protected override bool OnBackButtonPressed()
+    {
+        if (BindingContext is not BaseViewModel viewModel) return base.OnBackButtonPressed();
+        viewModel.OnAndroidBackButtonPressedAsync();
+        return true;
+
+    }
+
 }

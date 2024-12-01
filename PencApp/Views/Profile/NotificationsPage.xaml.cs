@@ -2,9 +2,9 @@ using PencApp.Views.Shared;
 
 namespace PencApp.Views.Profile;
 
-public partial class PersonalInformationPage : CustomContentPage
+public partial class NotificationsPage : CustomContentPage
 {
-    public PersonalInformationPage()
+    public NotificationsPage()
     {
         InitializeComponent();
     }

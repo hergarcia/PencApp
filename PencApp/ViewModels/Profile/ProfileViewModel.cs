@@ -5,29 +5,29 @@ using PencApp.Models;
 using PencApp.Services.Exceptions;
 using PencApp.Services.User;
 using PencApp.ViewModels.Onboarding;
-using PencApp.Views.Onboarding;
 
 namespace PencApp.ViewModels.Profile;
 
 [ObservableRecipient]
-public partial class ProfileViewModel : BaseViewModel, IRecipient<User>
+public partial class ProfileViewModel : BaseViewModel, IRecipient<CurrentUserChangedMessage>
 {
     [ObservableProperty] private User? _currentUser;
     [ObservableProperty] private string? _nameInitials;
+    [ObservableProperty] private bool _loadingUserData = true;
 
     private readonly IUserService _userService;
-
     
     public ProfileViewModel(INavigationService navigationService, IExceptionService exceptionService, IUserService userService) : base(navigationService, exceptionService)
     {
         _userService = userService;
-        WeakReferenceMessenger.Default.Register(this);
+        WeakReferenceMessenger.Default.Register(this, IUserService.CurrentUserChangedToken);
     }
     
-    public void Receive(User message)
+    public void Receive(CurrentUserChangedMessage message)
     {
-        CurrentUser = message;
+        CurrentUser = message.Value;
         SetNameInitials();
+        LoadingUserData = false;
     }
 
     private void SetNameInitials()
@@ -38,26 +38,29 @@ public partial class ProfileViewModel : BaseViewModel, IRecipient<User>
         }
     }
 
-    public override async Task InitializeAsync(INavigationParameters parameters)
-    {
-        try
-        {
-            CurrentUser = Task.Run(async () => await _userService.GetCurrentUser()).Result;
-            SetNameInitials();
-        }
-        catch (Exception e)
-        {
-            _userService.Logout();
-            await NavigationService.NavigateAsync(nameof(NavigationPage) + "/" + nameof(LoginPage));
-        }
-        await base.InitializeAsync(parameters);
-    }
-
     [RelayCommand]
     private async Task GoToPersonalInformation()
     {
         await NavigationService.CreateBuilder()
             .AddSegment<PersonalInformationViewModel>()
+            .AddParameter(nameof(CurrentUser), CurrentUser)
+            .NavigateAsync();
+    }
+    
+    [RelayCommand]
+    private async Task GoToChangePassword()
+    {
+        await NavigationService.CreateBuilder()
+            .AddSegment<ChangePasswordViewModel>()
+            .AddParameter(nameof(CurrentUser), CurrentUser)
+            .NavigateAsync();
+    }
+
+    [RelayCommand]
+    private async Task GoToNotifications()
+    {
+        await NavigationService.CreateBuilder()
+            .AddSegment<NotificationsViewModel>()
             .NavigateAsync();
     }
 
@@ -72,4 +75,5 @@ public partial class ProfileViewModel : BaseViewModel, IRecipient<User>
             .UseAbsoluteNavigation(true)
             .NavigateAsync();
     }
+
 }

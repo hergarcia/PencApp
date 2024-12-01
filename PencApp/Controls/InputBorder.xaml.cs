@@ -7,7 +7,7 @@ namespace PencApp.Controls;
 
 public partial class InputBorder : Border
 {
-    private static readonly Color DefaultFocusedBorderColor = (Color)ApplicationResources.GetResource("BlueHeader");
+    private static readonly Color DefaultFocusedBorderColor = (Color)ApplicationResources.GetResource("PrimaryDarkBlue");
     private static readonly Color DefaultUnfocusedBorderColor = (Color)ApplicationResources.GetResource("LightGray");
 
     public InputBorder()

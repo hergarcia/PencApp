@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<ContentPage
+<shared:CustomContentPage
     x:Class="PencApp.Views.Onboarding.LoginPage"
     x:DataType="vm:LoginViewModel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:controls="clr-namespace:PencApp.Controls"
     xmlns:lang="clr-namespace:PencApp.Resources.Languages"
+    xmlns:shared="clr-namespace:PencApp.Views.Shared"
     xmlns:styles="clr-namespace:PencApp.Resources.Styles"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:PencApp.ViewModels.Onboarding"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <ContentPage.Resources>
+    <shared:CustomContentPage.Resources>
         <Style TargetType="controls:CustomEntry">
             <Setter Property="HasCleanButton" Value="True" />
         </Style>
-    </ContentPage.Resources>
+    </shared:CustomContentPage.Resources>
 
-    <ContentPage.Content>
-        <Grid BackgroundColor="{toolkit:AppThemeResource BlueHeader}" RowDefinitions="Auto,*">
-            <Label
-                FontAttributes="Bold"
-                FontSize="42"
-                Margin="20"
-                Text="{x:Static lang:AppResources.Sign_in_header}"
-                TextColor="White" />
+    <shared:CustomContentPage.Content>
+        <Grid
+            BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlue}"
+            RowDefinitions="Auto,*"
+            RowSpacing="10">
+            <controls:CustomNavigationBar
+                HasLeftButton="False"
+                HasRightButton="False"
+                Title="{x:Static lang:AppResources.Sign_in_header}" />
             <Grid
                 BackgroundColor="White"
                 Grid.Row="1"
@@ -52,6 +54,7 @@
                                 Text="{Binding Password}" />
                         </VerticalStackLayout>
                         <Button
+                            Command="{Binding GoToForgotPasswordCommand}"
                             HorizontalOptions="End"
                             Style="{StaticResource TextButtonStyle}"
                             Text="{x:Static lang:AppResources.Forgot_password}" />
@@ -101,5 +104,5 @@
             </Grid>
         </Grid>
 
-    </ContentPage.Content>
-</ContentPage>
+    </shared:CustomContentPage.Content>
+</shared:CustomContentPage>

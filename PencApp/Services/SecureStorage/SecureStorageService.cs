@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace PencApp.Services.SecureStorage;
 
 public class SecureStorageService : ISecureStorageService
@@ -17,7 +19,7 @@ public class SecureStorageService : ISecureStorageService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Debug.WriteLine(e);
             throw;
         }
     }
@@ -31,7 +33,7 @@ public class SecureStorageService : ISecureStorageService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Debug.WriteLine(e);
             throw;
         }
     }
@@ -44,7 +46,7 @@ public class SecureStorageService : ISecureStorageService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Debug.WriteLine(e);
             throw;
         }
     }
@@ -57,7 +59,7 @@ public class SecureStorageService : ISecureStorageService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Debug.WriteLine(e);
             throw;
         }
     }

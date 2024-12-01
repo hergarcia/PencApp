@@ -3,10 +3,49 @@
 <tabbedPage:BaseTabPage
     IconImageSource="home.png"
     Title="{x:Static lang:AppResources.Home}"
-    xmlns:lang="clr-namespace:PencApp.Resources.Languages"
     x:Class="PencApp.Views.Home.HomePage"
+    x:DataType="vm:HomeViewModel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:api="clr-namespace:PencApp.Services.ApiClient"
+    xmlns:lang="clr-namespace:PencApp.Resources.Languages"
+    xmlns:styles="clr-namespace:PencApp.Resources.Styles"
     xmlns:tabbedPage="clr-namespace:PencApp.Views.TabbedPage"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PencApp.ViewModels.Home"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <ContentPage.Content />
+
+    <tabbedPage:BaseTabPage.Content>
+        <Grid
+            BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlue}"
+            RowDefinitions="Auto,*"
+            RowSpacing="20">
+            <VerticalStackLayout Margin="20,0" Spacing="20">
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SubHeadline}"
+                    Text="{x:Static lang:AppResources.Home}"
+                    TextColor="White" />
+            </VerticalStackLayout>
+            <Border
+                BackgroundColor="{toolkit:AppThemeResource AppBackgroundColor}"
+                Grid.Row="1"
+                StrokeShape="{RoundRectangle CornerRadius={x:Static styles:UiConstants.TopRoundedWideCornerRadius}}"
+                StrokeThickness="0">
+                <CollectionView ItemsSource="{Binding Matches}" Margin="15,20">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="api:MatchDTO">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Date, StringFormat='date: {0}'}" />
+                                <Label Text="{Binding Tournament, StringFormat='tournament: {0}'}" />
+                                <Label Text="{Binding HomeTeam, StringFormat='home team: {0}'}" />
+                                <Label Text="{Binding HomeTeamScore, StringFormat='home team score: {0}'}" />
+                                <Label Text="{Binding AwayTeam, StringFormat='away team: {0}'}" />
+                                <Label Text="{Binding AwayTeamScore, StringFormat='away tema score: {0}'}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+        </Grid>
+    </tabbedPage:BaseTabPage.Content>
 </tabbedPage:BaseTabPage>
