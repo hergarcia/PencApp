@@ -2,9 +2,45 @@
 
 <shared:CustomContentPage
     x:Class="PencApp.Views.Profile.NotificationsPage"
+    x:DataType="vm:NotificationsViewModel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:controls="clr-namespace:PencApp.Controls"
+    xmlns:lang="clr-namespace:PencApp.Resources.Languages"
     xmlns:shared="clr-namespace:PencApp.Views.Shared"
+    xmlns:styles="clr-namespace:PencApp.Resources.Styles"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PencApp.ViewModels.Profile"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <shared:CustomContentPage.Content />
+    <shared:CustomContentPage.Content>
+        <Grid
+            BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlue}"
+            RowDefinitions="Auto,*"
+            RowSpacing="10">
+            <controls:CustomNavigationBar
+                BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlue}"
+                LeftButtonCommand="{Binding GoBackCommand}"
+                LeftButtonIconColor="White"
+                TextColor="White"
+                Title="{x:Static lang:AppResources.Notifications}" />
+            <Border
+                BackgroundColor="{toolkit:AppThemeResource AppBackgroundColor}"
+                Grid.Row="1"
+                StrokeShape="{RoundRectangle CornerRadius={x:Static styles:UiConstants.TopRoundedWideCornerRadius}}"
+                StrokeThickness="0">
+                <ScrollView
+                    Orientation="Vertical"
+                    Padding="15,20"
+                    VerticalScrollBarVisibility="Never">
+                    <VerticalStackLayout BackgroundColor="{toolkit:AppThemeResource AppBackgroundColor}" Spacing="10">
+                        <controls:CustomSwitch IsEnabled="False" />
+                        <controls:CustomSwitch IsEnabled="False" IsToggled="True" />
+                        <controls:CustomSwitch />
+                        <controls:CustomSwitch />
+                        <controls:CustomSwitch />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+        </Grid>
+    </shared:CustomContentPage.Content>
 </shared:CustomContentPage>

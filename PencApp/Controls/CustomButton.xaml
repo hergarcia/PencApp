@@ -26,9 +26,9 @@
             Grid.ColumnSpan="3" />
 
         <Grid
-            InputTransparent="True"
             ColumnDefinitions="24,*,24"
             ColumnSpacing="10"
+            InputTransparent="True"
             Padding="10,0">
             <ffimageloading:SvgCachedImage Source="{Binding LeftImageSource}">
                 <ffimageloading:SvgCachedImage.Behaviors>
@@ -49,8 +49,11 @@
             </ffimageloading:SvgCachedImage>
         </Grid>
         <Grid.Triggers>
-            <DataTrigger TargetType="Grid" Binding="{Binding IsEnabled}" Value="False">
-                <Setter Property="Opacity" Value=".2"/>
+            <DataTrigger
+                Binding="{Binding IsEnabled}"
+                TargetType="Grid"
+                Value="False">
+                <Setter Property="Opacity" Value=".2" />
             </DataTrigger>
         </Grid.Triggers>
     </Grid>

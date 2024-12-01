@@ -1,24 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               CanBeDismissedByTappingOutsideOfPopup="False"
-               Color="Transparent"
-               xmlns:styles="clr-namespace:PencApp.Resources.Styles"
-               VerticalOptions="Center"
-               x:Class="PencApp.Controls.Popups.LoadingPopup">
+<toolkit:Popup
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Color="Transparent"
+    VerticalOptions="Center"
+    x:Class="PencApp.Controls.Popups.LoadingPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:styles="clr-namespace:PencApp.Resources.Styles"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Border
-        StrokeThickness="0"
         BackgroundColor="{toolkit:AppThemeResource PrimaryDarkBlue}"
+        MinimumWidthRequest="200"
         Padding="40,20"
-        MinimumWidthRequest="200">
+        StrokeThickness="0">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="{x:Static styles:UiConstants.RoundedCornerRadius}"></RoundRectangle>
+            <RoundRectangle CornerRadius="{x:Static styles:UiConstants.RoundedCornerRadius}" />
         </Border.StrokeShape>
         <VerticalStackLayout Spacing="20">
-            <ActivityIndicator HeightRequest="30" Color="{toolkit:AppThemeResource PrimaryGreen}" IsRunning="True"></ActivityIndicator>
-            <Label x:Name="Label" TextColor="White" HorizontalOptions="Center"></Label>
+            <ActivityIndicator
+                Color="{toolkit:AppThemeResource PrimaryGreen}"
+                HeightRequest="30"
+                IsRunning="True" />
+            <Label
+                HorizontalOptions="Center"
+                TextColor="White"
+                x:Name="Label" />
         </VerticalStackLayout>
     </Border>
 </toolkit:Popup>

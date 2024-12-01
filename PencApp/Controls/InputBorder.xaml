@@ -48,7 +48,7 @@
             <Setter Property="Stroke" Value="{toolkit:AppThemeResource GreenSuccess}" />
             <Setter Property="BackgroundColor" Value="{toolkit:AppThemeResource GreenSuccessLight}" />
         </DataTrigger>
-        
+
         <DataTrigger
             Binding="{Binding Source={x:Reference Border}, Path=InputState}"
             TargetType="Border"
